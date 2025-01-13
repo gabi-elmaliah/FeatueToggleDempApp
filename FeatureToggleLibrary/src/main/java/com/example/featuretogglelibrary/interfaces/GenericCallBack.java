@@ -1,8 +1,6 @@
 package com.example.featuretogglelibrary.interfaces;
 
 public interface GenericCallBack {
-    void success(String data);
-
-    void error(String error);
-
+    void success(String message); // For success responses
+    void error(String error);     // For failure responses
 }
