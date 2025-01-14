@@ -63,6 +63,17 @@ public interface FeatureApi {
     @GET("feature-toggles/{package_name}/statistics")
     Call<ResponseBody> getFeatureToggleStatistics(@Path("package_name") String packageName);
 
+    // Get all active feature toggles by a specific date
+    @GET("feature-toggles/{package_name}/by-date")
+    Call<List<FeatureToggleItem>> getFeatureTogglesByDate(
+            @Path("package_name") String packageName,
+            @Query("date") String date
+    );
+
+    // Delete all feature toggles for a package
+    @DELETE("feature-toggles/{package_name}")
+    Call<ResponseBody> deleteAllFeatureToggles(@Path("package_name") String packageName);
+
 
 
 }

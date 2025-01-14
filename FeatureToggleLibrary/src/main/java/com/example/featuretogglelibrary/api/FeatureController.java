@@ -19,7 +19,7 @@ import com.example.featuretogglelibrary.model.FeaturesStatistics;
 
 public class FeatureController {
 
-    private static final String BASE_URL = "http://127.0.0.1:5000/"; // Replace with your server's base URL
+    private static final String BASE_URL = "http://10.0.2.2:5000/";
 
     private FeatureApi getAPI() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -46,7 +46,7 @@ public class FeatureController {
         }
     }
 
-    public void fetchAllFeatureToggles(String packageName, CallBack_Features callbackFeatures)
+    public void fetchAllFeatureToggles(String packageName, GenericCallBack<List<FeatureToggleItem>> callbackFeatures)
     {
         // Create a call object for the GET request
         Call<List<FeatureToggleItem>> call = getAPI().getAllFeatureToggles(packageName);
@@ -57,18 +57,18 @@ public class FeatureController {
             public void onResponse(Call<List<FeatureToggleItem>> call, Response<List<FeatureToggleItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Pass the response body to the success callback
-                    callbackFeatures.ready(response.body());
+                    callbackFeatures.success(response.body());
                 } else {
                     // Extract error message from the response and pass it to the failure callback
                     String errorMessage = extractErrorMessage(response);
-                    callbackFeatures.failed("Failed to fetch feature toggles: " + errorMessage);
+                    callbackFeatures.error("Failed to fetch feature toggles: " + errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<List<FeatureToggleItem>> call, Throwable t) {
                 // Pass the throwable message to the failure callback
-                callbackFeatures.failed("Error: " + t.getMessage());
+                callbackFeatures.error("Error: " + t.getMessage());
             }
         });
 
@@ -77,23 +77,23 @@ public class FeatureController {
 
 
 
-    public void fetchAllActiveFeatures(String packageName, CallBack_Features callbackFeatures)
+    public void fetchAllActiveFeatures(String packageName, GenericCallBack<List<FeatureToggleItem>> callbackFeatures)
     {
         Call<List<FeatureToggleItem>> call = getAPI().getActiveFeatureToggles(packageName);
         call.enqueue(new Callback<List<FeatureToggleItem>>() {
             @Override
             public void onResponse(Call<List<FeatureToggleItem>> call, Response<List<FeatureToggleItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    callbackFeatures.ready(response.body());
+                    callbackFeatures.success(response.body());
                 } else {
                     String errorMessage = extractErrorMessage(response);
-                    callbackFeatures.failed("Failed to delete feature toggle: " + errorMessage);
+                    callbackFeatures.error("Failed to delete feature toggle: " + errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<List<FeatureToggleItem>> call, Throwable t) {
-                callbackFeatures.failed("Error: " + t.getMessage());
+                callbackFeatures.error("Error: " + t.getMessage());
             }
         });
     }
@@ -229,7 +229,7 @@ public class FeatureController {
             String packageName,
             String startDate,
             String endDate,
-            CallBack_Features callbackFeatures)
+            GenericCallBack<List<FeatureToggleItem>> callbackFeatures)
     {
         // Create a call object for the GET request
         Call<List<FeatureToggleItem>> call = getAPI().getActiveFeaturesInRange(packageName, startDate, endDate);
@@ -240,18 +240,18 @@ public class FeatureController {
             public void onResponse(Call<List<FeatureToggleItem>> call, Response<List<FeatureToggleItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Notify the success callback with the retrieved features
-                    callbackFeatures.ready(response.body());
+                    callbackFeatures.success(response.body());
                 } else {
                     // Extract the error message from the response and pass it to the failure callback
                     String errorMessage = extractErrorMessage(response);
-                    callbackFeatures.failed("Failed to retrieve active features in range: " + errorMessage);
+                    callbackFeatures.error("Failed to retrieve active features in range: " + errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<List<FeatureToggleItem>> call, Throwable t) {
                 // Notify the failure callback with the error message
-                callbackFeatures.failed("Error: " + t.getMessage());
+                callbackFeatures.error("Error: " + t.getMessage());
             }
         });
     }
@@ -295,19 +295,66 @@ public class FeatureController {
 
 
 
+    }
 
+    public void getFeatureTogglesByDate(String packageName, String date, GenericCallBack<List<FeatureToggleItem>> genericCallBack
+    ) {
+        // Create a call object for the GET request
+        Call<List<FeatureToggleItem>> call = getAPI().getFeatureTogglesByDate(packageName, date);
 
+        // Enqueue the call to make an asynchronous request
+        call.enqueue(new Callback<List<FeatureToggleItem>>() {
+            @Override
+            public void onResponse(Call<List<FeatureToggleItem>> call, Response<List<FeatureToggleItem>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Pass the retrieved data to the success callback
+                    genericCallBack.success(response.body());
+                } else {
+                    // Extract the error message from the response
+                    String errorMessage = extractErrorMessage(response);
+                    genericCallBack.error("Failed to fetch feature toggles by date: " + errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FeatureToggleItem>> call, Throwable t) {
+                // Notify the failure callback with the error message
+                genericCallBack.error("Error: " + t.getMessage());
+            }
+        });
     }
 
 
+    public void deleteAllFeatureToggles(String packageName, GenericCallBack<String> genericCallBack
+    ) {
+        // Create a call object for the DELETE request
+        Call<ResponseBody> call = getAPI().deleteAllFeatureToggles(packageName);
 
+        // Enqueue the call to make an asynchronous request
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        // Extract the success message from the response
+                        String message =response.body().string() ;
+                        genericCallBack.success(message);
+                    } catch (Exception e) {
+                        genericCallBack.error("Failed to parse server response.");
+                    }
+                } else {
+                    // Extract the error message from the response
+                    String errorMessage = extractErrorMessage(response);
+                    genericCallBack.error("Failed to delete feature toggles: " + errorMessage);
+                }
+            }
 
-
-
-
-
-
-
-
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Notify the failure callback with the error message
+                genericCallBack.error("Error: " + t.getMessage());
+            }
+        });
+    }
 
 }
