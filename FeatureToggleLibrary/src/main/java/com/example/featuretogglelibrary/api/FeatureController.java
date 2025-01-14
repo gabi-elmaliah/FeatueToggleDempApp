@@ -15,6 +15,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.example.featuretogglelibrary.interfaces.CallBack_Features;
+import com.example.featuretogglelibrary.model.FeaturesStatistics;
 
 public class FeatureController {
 
@@ -257,6 +258,42 @@ public class FeatureController {
 
     public void getFeatureToggleStatistics(String packageName, GenericCallBack genericCallBack)
     {
+
+        // Create a call object for the GET request
+        Call<ResponseBody> call = getAPI().getFeatureToggleStatistics(packageName);
+
+        // Enqueue the call to make an asynchronous request
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        // Parse the response JSON into the FeatureStatistics object
+                        String responseBody = response.body().string();
+                        Gson gson = new Gson();
+                        FeaturesStatistics statistics = gson.fromJson(responseBody, FeaturesStatistics.class);
+
+                        // Pass the success message with the statistics data
+                        genericCallBack.success(statistics);
+                    } catch (Exception e) {
+                        // Handle any parsing or I/O errors
+                        genericCallBack.error("Failed to parse statistics response.");
+                    }
+                } else {
+                    // Extract the error message from the response
+                    String errorMessage = extractErrorMessage(response);
+                    genericCallBack.error("Failed to fetch statistics: " + errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Notify the failure callback with the error message
+                genericCallBack.error("Error: " + t.getMessage());
+            }
+        });
+
+
 
 
 
