@@ -9,18 +9,29 @@ public class FeatureToggleItem {
     private String expiration_date;
     private String name;
     private String updated_at;
+    private String package_name;
+
+    public String getPackage_name() {
+        return package_name;
+    }
+
+    public void setPackage_name(String package_name) {
+        this.package_name = package_name;
+    }
 
     public FeatureToggleItem() {
 
     }
 
-    public FeatureToggleItem(String beginning_date, String created_at, String description, String expiration_date, String name, String updated_at) {
+    public FeatureToggleItem(String beginning_date, String created_at, String description, String expiration_date,
+                             String name, String updated_at,String package_name) {
         this.beginning_date = beginning_date;
         this.created_at = created_at;
         this.description = description;
         this.expiration_date = expiration_date;
         this.name = name;
         this.updated_at = updated_at;
+        this.package_name = package_name;
     }
 
     public String get_id() {
@@ -77,5 +88,17 @@ public class FeatureToggleItem {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @Override
+    public String toString() {
+        return  "FeatureToggleItem{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", beginningDate='" + beginning_date + '\'' +
+                ", expirationDate='" + expiration_date + '\'' +
+                ", createdAt='" + created_at + '\'' +
+                ", updatedAt='" + updated_at + '\'' +
+                '}';
     }
 }

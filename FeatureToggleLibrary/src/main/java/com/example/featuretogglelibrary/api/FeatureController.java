@@ -19,7 +19,8 @@ import com.example.featuretogglelibrary.model.FeaturesStatistics;
 
 public class FeatureController {
 
-    private static final String BASE_URL = "http://10.0.2.2:5000/";
+    private static final String BASE_URL = "https://feature-toggle-api-mao-2102299.vercel.app/";
+
 
     private FeatureApi getAPI() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -42,7 +43,7 @@ public class FeatureController {
             JsonObject errorJson = new Gson().fromJson(errorBody, JsonObject.class);
             return errorJson.has("error") ? errorJson.get("error").getAsString() : "Unknown error";
         } catch (Exception e) {
-            return "Failed to parse error response.";
+             return "Failed to parse error response.";
         }
     }
 
@@ -87,7 +88,7 @@ public class FeatureController {
                     callbackFeatures.success(response.body());
                 } else {
                     String errorMessage = extractErrorMessage(response);
-                    callbackFeatures.error("Failed to delete feature toggle: " + errorMessage);
+                    callbackFeatures.error("Failed to fetch active feature toggle: " + errorMessage);
                 }
             }
 
@@ -107,7 +108,7 @@ public class FeatureController {
                     genericCallBack.success("Feature created successfully!");
                 } else {
                     String errorMessage = extractErrorMessage(response);
-                    genericCallBack.error("Failed to delete feature toggle: " + errorMessage);
+                    genericCallBack.error("Failed to create feature toggle: " + errorMessage);
                 }
             }
 

@@ -30,23 +30,30 @@ public class MainActivity extends AppCompatActivity
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            System.out.println("package name is :"+ this.getPackageName());
+        FeatureToggleItem updatedData = new FeatureToggleItem();
+        updatedData.setBeginning_date("2025-02-01 00:00:00"); // Example beginning date
+        updatedData.setExpiration_date("2026-12-31 23:59:59"); // Example expiration date
 
-            // Test the getActiveFeatures function
-            FeatureToggle.getActiveFeatures(this, new FeatureToggle.Callback_Data<List<FeatureToggleItem>>() {
-                @Override
-                public void onSuccess(List<FeatureToggleItem> data) {
-                    // Handle the success case
-                    Log.d(TAG, "Active Features fetched successfully: " + data.toString());
+        FeatureToggle.updateFeatureDates(
+                this, // Pass the context
+                "814b5dda-c77b-4929-9a40-b683c56adbc6", // Replace with the actual feature toggle ID
+                updatedData,
+                new FeatureToggle.Callback_Data<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        Log.d(TAG, "Feature toggle dates updated successfully: " + data);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Log.e(TAG, "Error updating feature toggle dates: " + errorMessage);
+                    }
                 }
-                @Override
-                public void onError(String errorMessage) {
-                    // Handle the error case
-                    Log.e(TAG, "Error fetching active features: " + errorMessage);
-                }
-            });
+        );
     }
 }
+
+
 
 
 
