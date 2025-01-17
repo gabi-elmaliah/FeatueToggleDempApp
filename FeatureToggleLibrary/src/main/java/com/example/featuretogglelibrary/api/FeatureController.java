@@ -172,7 +172,9 @@ public class FeatureController {
         });
     }
 
-    public void getRecentFeatureToggles(String packageName, CallBack_Features callbackFeatures) {
+
+    //8. Retrieve all feature toggles created in the last 30 days for a specific package
+    public void getRecentFeatureToggles(String packageName, GenericCallBack<List<FeatureToggleItem>> callbackFeatures) {
         // Create a call object for the GET request
         Call<List<FeatureToggleItem>> call = getAPI().getRecentFeatureToggles(packageName);
 
@@ -182,18 +184,18 @@ public class FeatureController {
             public void onResponse(Call<List<FeatureToggleItem>> call, Response<List<FeatureToggleItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // Pass the list of recent feature toggles to the success callback
-                    callbackFeatures.ready(response.body());
+                    callbackFeatures.success(response.body());
                 } else {
                     // Extract the error message from the response and pass it to the failure callback
                     String errorMessage = extractErrorMessage(response);
-                    callbackFeatures.failed("Failed to fetch recent feature toggles: " + errorMessage);
+                    callbackFeatures.error("Failed to fetch recent feature toggles: " + errorMessage);
                 }
             }
 
             @Override
             public void onFailure(Call<List<FeatureToggleItem>> call, Throwable t) {
                 // Pass the failure message to the failure callback
-                callbackFeatures.failed("Error: " + t.getMessage());
+                callbackFeatures.error("Error: " + t.getMessage());
             }
         });
     }
@@ -326,8 +328,7 @@ public class FeatureController {
     }
 
 
-    public void deleteAllFeatureToggles(String packageName, GenericCallBack<String> genericCallBack
-    ) {
+    public void deleteAllFeatureToggles(String packageName, GenericCallBack<String> genericCallBack) {
         // Create a call object for the DELETE request
         Call<ResponseBody> call = getAPI().deleteAllFeatureToggles(packageName);
 
@@ -357,5 +358,12 @@ public class FeatureController {
             }
         });
     }
+
+
+
+
+
+
+
 
 }

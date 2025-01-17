@@ -92,13 +92,12 @@ public class FeatureToggleItem {
 
     @Override
     public String toString() {
-        return  "FeatureToggleItem{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", beginningDate='" + beginning_date + '\'' +
-                ", expirationDate='" + expiration_date + '\'' +
-                ", createdAt='" + created_at + '\'' +
-                ", updatedAt='" + updated_at + '\'' +
-                '}';
+        return  "FeatureToggleItem:\n" +
+                "name: " + name + '\n' +
+                "description: " + description + '\n' +
+                "beginningDate: " + beginning_date + '\n' +
+                "expirationDate: " + expiration_date + '\n' +
+                "createdAt=: " + created_at + '\n' +
+                "updatedAt=: " + updated_at + '\n' ;
     }
 }
