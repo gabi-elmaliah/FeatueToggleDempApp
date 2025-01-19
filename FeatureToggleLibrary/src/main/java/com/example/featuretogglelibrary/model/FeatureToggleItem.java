@@ -1,5 +1,10 @@
 package com.example.featuretogglelibrary.model;
 
+/**
+ * Represents a feature toggle with associated metadata.
+ * A feature toggle allows for enabling or disabling specific application features dynamically.
+ */
+
 public class FeatureToggleItem {
 
     private String _id;
