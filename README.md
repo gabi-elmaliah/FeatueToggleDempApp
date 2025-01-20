@@ -102,7 +102,7 @@ FeatureToggle.deleteFeatureToggle(context, "feature-id", new FeatureToggle.Callb
 
 ## License
 
-This library is licensed under the MIT License. See the [MIT LICENSE](LICENSE) file for details.
+This library is licensed under the MIT License. See the [MIT LICENSE](License) file for details.
 
 
 
