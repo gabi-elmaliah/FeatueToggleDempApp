@@ -34,6 +34,7 @@ public class FeaturesStatistics {
         return active_features;
     }
 
+
     public void setActive_features(int active_features) {
         this.active_features = active_features;
     }

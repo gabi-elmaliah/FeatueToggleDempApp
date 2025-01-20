@@ -193,7 +193,7 @@ public class FeatureController {
      *
      * @param packageName     The name of the package to which the feature toggle belongs.
      * @param featureId       The unique ID of the feature toggle to be updated.
-     * @param updatedData     A {@link FeatureToggleItem} object containing the new beginning and expiration dates.
+     * @param updatedData     A {@link com.example.featuretogglelibrary.model.FeatureToggleItem} object containing the new beginning and expiration dates.
      * @param genericCallBack A callback to handle success or error responses from the server.
      *
      * Example usage:
@@ -206,13 +206,13 @@ public class FeatureController {
      *     "com.example.myapp", // Replace with the actual package name
      *     "814b5dda-c77b-4929-9a40-b683c56adbc6", // Replace with the actual feature ID
      *     updatedData,
-     *     new GenericCallBack<String>() {
-     *         @Override
+     *      new GenericCallBack&lt;String&gt;() {
+     *
      *         public void success(String message) {
      *             System.out.println("Feature dates updated successfully: " + message);
      *         }
      *
-     *         @Override
+     *
      *         public void error(String error) {
      *             System.err.println("Error updating feature dates: " + error);
      *         }
@@ -361,28 +361,7 @@ public class FeatureController {
      *
      * @param packageName    The name of the package for which the statistics are to be retrieved.
      * @param genericCallBack A callback to handle the success or error responses.
-     *                        On success, it provides a {@link FeaturesStatistics} object containing the statistics.
-     *
-     * Example usage:
-     * <pre>
-     * featureController.getFeatureToggleStatistics(
-     *     "com.example.myapp", // Replace with your package name
-     *     new GenericCallBack<FeaturesStatistics>() {
-     *         @Override
-     *         public void success(FeaturesStatistics statistics) {
-     *             System.out.println("Feature Statistics:");
-     *             System.out.println("Total Toggles: " + statistics.getTotalToggles());
-     *             System.out.println("Active Toggles: " + statistics.getActiveToggles());
-     *             System.out.println("Inactive Toggles: " + statistics.getInactiveToggles());
-     *         }
-     *
-     *         @Override
-     *         public void error(String errorMessage) {
-     *             System.err.println("Error fetching statistics: " + errorMessage);
-     *         }
-     *     }
-     * );
-     * </pre>
+     *                        On success, it provides a {@link com.example.featuretogglelibrary.model.FeaturesStatistics} object containing the statistics.
      */
 
     public void getFeatureToggleStatistics(String packageName, GenericCallBack genericCallBack)

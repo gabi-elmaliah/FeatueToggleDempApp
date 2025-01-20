@@ -20,8 +20,26 @@ import java.util.List;
 public class FeatureToggle
 {
     private  static FeatureController featureController=new FeatureController();
+    /**
+     * Interface defining a generic callback mechanism for handling asynchronous operations.
+     * This interface allows handling both successful results and error responses.
+     *
+     * @param <T> The type of data expected in the success callback.
+     */
     public interface Callback_Data<T> {
+
+        /**
+         * Called when the asynchronous operation completes successfully.
+         *
+         * @param data The data returned from the operation.
+         */
         void onSuccess(T data);
+
+        /**
+         * Called when the asynchronous operation fails or encounters an error.
+         *
+         * @param errorMessage A message describing the error.
+         */
         void onError(String errorMessage);
     }
 
@@ -30,23 +48,6 @@ public class FeatureToggle
      *
      * @param context  The Android context, used to get the package name.
      * @param callback The callback to handle the list of active feature toggles or errors.
-     *
-     * Example:
-     * <pre>
-     * FeatureToggle.getActiveFeatures(context, new FeatureToggle.Callback_Data<List<FeatureToggleItem>>() {
-     *     @Override
-     *     public void onSuccess(List<FeatureToggleItem> activeFeatures) {
-     *         for (FeatureToggleItem feature : activeFeatures) {
-     *             Log.d("ActiveFeature", "Feature: " + feature.getName());
-     *         }
-     *     }
-     *
-     *     @Override
-     *     public void onError(String errorMessage) {
-     *         Log.e("ActiveFeatureError", "Error fetching active features: " + errorMessage);
-     *     }
-     * });
-     * </pre>
      */
 
     public static void getActiveFeatures(Context context, Callback_Data<List<FeatureToggleItem>> callback)
@@ -109,27 +110,6 @@ public class FeatureToggle
      * @param context       The Android context, used to retrieve the package name.
      * @param featureToggle The feature toggle object containing the details to be created.
      * @param callback      The callback to handle the result of the operation or errors.
-     *
-     * Example usage:
-     * <pre>
-     * FeatureToggleItem newFeatureToggle = new FeatureToggleItem();
-     * newFeatureToggle.setName("dark_mode");
-     * newFeatureToggle.setDescription("Enable dark mode for the application interface.");
-     * newFeatureToggle.setBeginning_date("2025-01-15 00:00:00");
-     * newFeatureToggle.setExpiration_date("2025-12-31 23:59:59");
-     *
-     * FeatureToggle.createFeatureToggle(context, newFeatureToggle, new FeatureToggle.Callback_Data<String>() {
-     *     @Override
-     *     public void onSuccess(String message) {
-     *         Log.d("CreateFeature", "Feature toggle created successfully: " + message);
-     *     }
-     *
-     *     @Override
-     *     public void onError(String errorMessage) {
-     *         Log.e("CreateFeatureError", "Error creating feature toggle: " + errorMessage);
-     *     }
-     * });
-     * </pre>
      */
     public static void createFeatureToggle(Context context, FeatureToggleItem featureToggle, Callback_Data<String> callback) {
         if (callback == null) {
@@ -344,25 +324,25 @@ public class FeatureToggle
      *
      * @param context The Android context, used to get the package name.
      * @param callback The callback to handle success or error responses.
-     *
      * Example usage:
      * <pre>
-     * FeatureToggle.getFeatureToggleStatistics(context, new FeatureToggle.Callback_Data<FeaturesStatistics>() {
-     *     @Override
-     *     public void onSuccess(FeaturesStatistics data) {
-     *         // Handle the successful response
-     *         Log.d("FeatureToggle", "Total Features: " + data.getTotalFeatures());
-     *         Log.d("FeatureToggle", "Active Features: " + data.getActiveFeatures());
-     *     }
+     * FeatureToggle.getFeatureToggleStatistics(context,
+     *     new FeatureToggle.Callback_Data&lt;FeaturesStatistics&gt;() {
+     *         public void onSuccess(FeaturesStatistics data) {
+     *             // Handle the successful response
+     *             Log.d("FeatureToggle", "Total Features: " + data.getTotalFeatures());
+     *             Log.d("FeatureToggle", "Active Features: " + data.getActiveFeatures());
+     *         }
      *
-     *     @Override
-     *     public void onError(String errorMessage) {
-     *         // Handle the error response
-     *         Log.e("FeatureToggle", "Error fetching statistics: " + errorMessage);
+     *         public void onError(String errorMessage) {
+     *             // Handle the error response
+     *             Log.e("FeatureToggle", "Error fetching statistics: " + errorMessage);
+     *         }
      *     }
-     * });
+     * );
      * </pre>
      */
+
 
     public static void getFeatureToggleStatistics(Context context, Callback_Data<FeaturesStatistics> callback) {
         if (callback == null) {
@@ -396,7 +376,6 @@ public class FeatureToggle
 
         /**
          * Fetch all feature toggles active on a specific date for the specified package.
-         *
          * @param context The Android context, used to get the package name.
          * @param date The date for which feature toggles are to be fetched, in format YYYY-MM-DD.
          * @param callback The callback to handle the data or errors.

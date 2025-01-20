@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.maven.publish) // Apply the maven-publish plugin
 }
 
 android {
@@ -8,7 +9,7 @@ android {
 
     defaultConfig {
         minSdk = 26
-
+        version = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -36,10 +37,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("com.google.code.gson:gson:2.8.9")
+    api("com.google.code.gson:gson:2.8.9")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.google.code.gson:gson:2.8.9")
+    api("com.google.code.gson:gson:2.8.9")
 
 
 
