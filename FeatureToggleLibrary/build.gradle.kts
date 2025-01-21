@@ -29,6 +29,40 @@ android {
     }
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.gabi-elmaliah" // Replace with your GitHub username
+                artifactId = "FeatureToggleLibrary"    // Replace with your library's name
+                version = "1.0.0"                   // Replace with your library's version
+                artifact(tasks.getByName("bundleReleaseAar"))
+
+                // Optional: Add dependencies
+                pom {
+                    withXml {
+                        val dependenciesNode = asNode().appendNode("dependencies")
+                        configurations.api.get().dependencies.forEach { dependency ->
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", dependency.group)
+                            dependencyNode.appendNode("artifactId", dependency.name)
+                            dependencyNode.appendNode("version", dependency.version)
+                            dependencyNode.appendNode("scope", "compile")
+                        }
+                        configurations.implementation.get().dependencies.forEach { dependency ->
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", dependency.group)
+                            dependencyNode.appendNode("artifactId", dependency.name)
+                            dependencyNode.appendNode("version", dependency.version)
+                            dependencyNode.appendNode("scope", "runtime")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 dependencies {
 
     implementation(libs.appcompat)
@@ -40,15 +74,6 @@ dependencies {
     api("com.google.code.gson:gson:2.8.9")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    api("com.google.code.gson:gson:2.8.9")
-
-
-
-
-
-
-
-
 
 
 }
