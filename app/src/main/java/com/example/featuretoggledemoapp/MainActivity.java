@@ -6,17 +6,11 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.featuretogglelibrary.FeatureToggle;
-import com.example.featuretogglelibrary.api.FeatureController;
-import com.example.featuretogglelibrary.interfaces.GenericCallBack;
 import com.example.featuretogglelibrary.model.FeatureToggleItem;
+
 
 import java.util.List;
 
