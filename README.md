@@ -15,6 +15,8 @@ A lightweight and flexible library to manage feature toggles in Android applicat
 
 ### **Usage**
 
+#### Examples of Usage
+
 #### **Initialize the Library**
 ```java
 FeatureToggle featureToggle = new FeatureToggle();
@@ -100,10 +102,43 @@ FeatureToggle.deleteFeatureToggle(context, "feature-id", new FeatureToggle.Callb
 });
 ```
 
+---
+
+## **How to Use**
+
+To use this library in your project, follow these steps:
+
+1. **Add JitPack to your project-level `build.gradle` or `settings.gradle`:**
+
+   ```kotlin
+   repositories {
+       maven { url = uri("https://jitpack.io") }
+   }
+   ```
+
+2. **Add the library dependency to your app-level `build.gradle`:**
+
+   ```kotlin
+   dependencies {
+       implementation("com.github.gabi-elmaliah:FeatureToggleLibrary:1.0.0")
+   }
+   ```
+
+3. **Using Gradle with `libs.versions.toml`:**
+    - Add the following entry to `libs.versions.toml`:
+      ```toml
+      [libraries]
+      feature-toggle-library = { module = "com.github.gabi-elmaliah:FeatureToggleLibrary", version = "1.0.0" }
+      ```
+    - Reference it in your `build.gradle`:
+      ```kotlin
+      dependencies {
+          implementation(libs.feature-toggle-library)
+      }
+      ```
+
+---
+
 ## License
 
 This library is licensed under the MIT License. See the [MIT LICENSE](License) file for details.
-
-
-
-
