@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/gabi-elmaliah/FeatueToggleLibrary.svg)](https://jitpack.io/#gabi-elmaliah/FeatueToggleLibrary)
 # **Feature Toggle Library**
 
 A lightweight and flexible library to manage feature toggles in Android applications. Easily enable, disable, and manage features dynamically using a centralized API.
