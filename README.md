@@ -140,6 +140,10 @@ To use this library in your project, follow these steps:
 
 ---
 
+## **Documentation**
+
+The complete documentation for the Feature Toggle Library is available [here](https://gabi-elmaliah.github.io/FeatureToggleLibrary/).
+
 ## License
 
 This library is licensed under the MIT License. See the [MIT LICENSE](License) file for details.
