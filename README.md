@@ -18,12 +18,7 @@ A lightweight and flexible library to manage feature toggles in Android applicat
 
 #### Examples of Usage
 
-#### **Initialize the Library**
-```java
-FeatureToggle featureToggle = new FeatureToggle();
-```
-
-#### **2. Fetch Active Features**
+#### **1. Fetch Active Features**
 Retrieve all active feature toggles for the current package:
 
 ```java
@@ -42,7 +37,7 @@ FeatureToggle.getActiveFeatures(context, new FeatureToggle.Callback_Data<List<Fe
 });
 ```
 
-#### **3. Create a Feature Toggle**
+#### **2. Create a Feature Toggle**
 Add a new feature toggle to the database:
 
 ```java
@@ -65,7 +60,7 @@ FeatureToggle.createFeatureToggle(context, newFeature, new FeatureToggle.Callbac
 });
 ```
 
-#### **4. Update Feature Dates**
+#### **3. Update Feature Dates**
 Modify the beginning and expiration dates for an existing feature:
 
 ```java
@@ -86,7 +81,7 @@ FeatureToggle.updateFeatureDates(context, "feature-id", updatedFeature, new Feat
 });
 ```
 
-#### **5. Delete a Feature Toggle**
+#### **4. Delete a Feature Toggle**
 Remove a feature toggle by ID:
 
 ```java
